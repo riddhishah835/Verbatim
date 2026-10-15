@@ -1,93 +1,127 @@
-# Verbatim
+# Verbatim — Full-Stack Bookstore
 
-Verbatim is a full-stack bookstore application for discovering books, managing a wishlist and cart, and placing orders with Razorpay checkout. The React storefront uses a warm, dark-academia visual theme.
+Verbatim is a full-stack bookstore application built with the MERN stack. It lets customers explore books, search and filter products, manage their shopping cart and wishlist, and place orders through Razorpay checkout.
+
+The storefront features a warm, dark-academia-inspired visual theme.
+
+**Live Demo:** https://verbatim-ebon-two.vercel.app
 
 ## Features
 
-- Customer registration, login, and logout
-- Product browsing, category filtering, and search
-- Product detail pages
-- Persistent cart with quantity controls
-- Wishlist management
-- Shipping details and Razorpay payment checkout
-- Order history and order detail pages
+- **Authentication:** Customer registration, login, and logout
+- **Book Discovery:** Browse products, search, filter by category, and view product details
+- **Shopping Cart:** Manage cart items and quantities
+- **Wishlist:** Save and manage favourite books
+- **Checkout:** Enter shipping details and complete checkout using Razorpay test payments
+- **Order Management:** View order history and individual order details
 
-## Tech stack
+## Tech Stack
 
-- **Frontend:** React, Vite, React Router, Redux Toolkit, Tailwind CSS
-- **Backend:** Node.js, Express, MongoDB, Mongoose
-- **Payments:** Razorpay
+| Layer | Technologies |
+|---|---|
+| Frontend | React, Vite, React Router, Redux Toolkit, Tailwind CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB, Mongoose |
+| Payments | Razorpay |
+| Deployment | Vercel (frontend), Render (backend) |
 
-## Requirements
+## Getting Started
+
+### Prerequisites
 
 - Node.js and npm
-- MongoDB connection string
-- Razorpay test API keys for checkout
+- A MongoDB connection string
+- Razorpay test API credentials for checkout
 
-## Setup
+### 1. Clone the repository
 
-### 1. Configure the backend
+```bash
+git clone https://github.com/riddhishah835/Verbatim.git
+cd Verbatim
+```
 
-Create a local environment file from the example:
+### 2. Configure the backend
+
+From the project root, run this in PowerShell:
 
 ```powershell
 Copy-Item Backend\.env.example Backend\.env
 ```
 
-Set these values in `Backend/.env`:
+Add the following values to `Backend/.env`:
 
 | Variable | Purpose |
-| --- | --- |
+|---|---|
 | `dbURL` | MongoDB connection string |
-| `jwt_secret` | Long, random secret used to sign authentication tokens |
+| `jwt_secret` | Strong, randomly generated authentication secret |
 | `RAZORPAY_KEY_ID` | Razorpay test key ID |
 | `RAZORPAY_KEY_SECRET` | Matching Razorpay test key secret |
 
-Do not commit `Backend/.env` or share its secret values. The `.env.example` file contains placeholders and is safe to commit.
+Use the variable names expected by the backend code. Never commit `.env` files or expose secret values.
 
-Install backend dependencies and start the API:
+Install dependencies and start the API:
 
-```powershell
+```bash
 cd Backend
 npm install
 node index.js
 ```
 
-The API listens on `http://localhost:8000`. The server currently allows the frontend origin `http://localhost:5173`.
+The backend runs at `http://localhost:8000` with the current local configuration.
 
-### 2. Start the frontend
+### 3. Configure and start the frontend
 
-In a second terminal:
+Open a **second terminal** from the repository root:
 
-```powershell
-cd Frontend\shopkart
+```bash
+cd Frontend/shopkart
 npm install
+```
+
+The frontend API client currently uses `http://localhost:8000`. If the API URL is configured through an environment variable in your code, set it to the local backend URL for local development.
+
+Start the frontend:
+
+```bash
 npm run dev
 ```
 
-Open the Vite URL printed in the terminal (by default, `http://localhost:5173`).
+Open the local URL printed by Vite, usually `http://localhost:5173`.
 
-## Frontend commands
+### 4. Frontend scripts
 
-Run these commands from `Frontend/shopkart`:
+Run these from `Frontend/shopkart`:
 
-```powershell
-npm run dev      # Start the Vite development server
-npm run build    # Create a production build in dist/
-npm run preview  # Preview the production build locally
-npm run lint     # Run Oxlint
-```
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build in `dist/` |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run Oxlint |
 
-## API overview
-
-The API base URL is configured as `http://localhost:8000` in `Frontend/shopkart/src/axioscalls/axios.js`.
+## API Overview
 
 | Route | Purpose |
-| --- | --- |
-| `/customers` | Registration, login, current customer, and logout |
-| `/products` | Product listing, search/filter query, and product details |
+|---|---|
+| `/customers` | Customer registration, login, current-user details, and logout |
+| `/products` | Product listing, search, filtering, and product details |
 | `/cart` | Authenticated cart retrieval and updates |
 | `/wishlist` | Authenticated wishlist retrieval and updates |
-| `/orders` | Authenticated order history, details, and payment endpoints |
+| `/orders` | Authenticated order history, order details, and payment-related operations |
 
-Cart, wishlist, and order routes require an authenticated customer. Order checkout requires valid Razorpay test credentials.
+Cart, wishlist, and order operations require an authenticated customer. Checkout requires valid Razorpay test credentials.
+
+## Deployment
+
+- **Frontend:** Vercel
+- **Backend:** Render
+- **Database:** MongoDB Atlas
+
+The deployed application uses environment variables for configuration. Local development uses the local backend URL; the deployed frontend must use the deployed API URL.
+
+## Security Notes
+
+- Keep database credentials, JWT secrets, and payment secrets private.
+- Do not commit `.env` files.
+- Use Razorpay test mode for development and testing.
+- Never put secret keys in frontend code.
