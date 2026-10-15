@@ -4,7 +4,9 @@ import gentoken from "../utilities/gentoken.js";
 
 
 const cookieOptions={
-    httpOnly:true
+    httpOnly:true,
+     secure: true,
+    sameSite: "none"
 }
 export const Registercustomer= async(req,res)=>{
     const {fullname,email,password,phone}=req.body
